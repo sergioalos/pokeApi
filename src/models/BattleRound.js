@@ -17,9 +17,15 @@ const BattleRound = sequelize.define('BattleRound', {
   timestamps: true
 });
 
-BattleRound.belongsTo(Battle, { foreignKey: 'battle_id' });
-BattleRound.belongsTo(Pokemon, { as: 'team1_pokemon', foreignKey: 'team1_pokemon_id' });
-BattleRound.belongsTo(Pokemon, { as: 'team2_pokemon', foreignKey: 'team2_pokemon_id' });
-BattleRound.belongsTo(Pokemon, { as: 'winner_pokemon', foreignKey: 'winner_pokemon_id' });
+if (process.env.NODE_ENV !== 'test') {
+  const Battle = require('./Battle');
+  const Pokemon = require('./Pokemon');
+
+  BattleRound.belongsTo(Battle, { foreignKey: 'battle_id' });
+  BattleRound.belongsTo(Pokemon, { as: 'team1_pokemon', foreignKey: 'team1_pokemon_id' });
+  BattleRound.belongsTo(Pokemon, { as: 'team2_pokemon', foreignKey: 'team2_pokemon_id' });
+  BattleRound.belongsTo(Pokemon, { as: 'winner_pokemon', foreignKey: 'winner_pokemon_id' });
+}
+
 
 module.exports = BattleRound;

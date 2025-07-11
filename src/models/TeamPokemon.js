@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Team = require('./Team');
-const Pokemon = require('./Pokemon');
+
 
 const TeamPokemon = sequelize.define('TeamPokemon', {
   position: {
@@ -12,7 +11,10 @@ const TeamPokemon = sequelize.define('TeamPokemon', {
   tableName: 'team_pokemons',
   timestamps: false
 });
+if (process.env.NODE_ENV !== 'test') {
 
+const Team = require('./Team');
+const Pokemon = require('./Pokemon');
 Team.belongsToMany(Pokemon, {
   through: TeamPokemon,
   foreignKey: 'team_id',
@@ -26,5 +28,7 @@ Pokemon.belongsToMany(Team, {
   otherKey: 'team_id',
   as: 'teams'
 });
+
+}
 
 module.exports = TeamPokemon;
