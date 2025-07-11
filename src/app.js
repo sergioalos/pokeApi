@@ -18,6 +18,7 @@ const statsRoutes = require('./routes/stats');
 // FIN Rutas
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware para parsear JSON
 app.use(express.json());
@@ -58,5 +59,9 @@ if (process.env.NODE_ENV !== 'test') {
       console.error('❌ Error al iniciar:', err);
     });
 }
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
+});
 
 module.exports = app;
